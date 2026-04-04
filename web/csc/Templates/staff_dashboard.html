@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard | CSC Computer Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styling */
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+
+        /* Top Navigation Bar */
+        .dashboard-nav {
+            background-color: #059669; /* Staff Green */
+            color: white; padding: 15px 40px; display: flex; 
+            justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .dashboard-nav h1 { margin: 0; font-size: 22px; font-weight: 700; }
+        
+        .logout-btn {
+            background-color: white; color: #059669; text-decoration: none; 
+            padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 14px; transition: 0.3s;
+        }
+        .logout-btn:hover { background-color: #E5E7EB; }
+
+        /* Main Container & Grid */
+        .container {
+            max-width: 1000px; margin: 40px auto; padding: 0 20px; 
+            display: grid; grid-template-columns: 1fr 2fr; gap: 20px;
+        }
+
+        /* Reusable Card Style */
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .card h2 { margin-top: 0; color: #111827; font-size: 20px; border-bottom: 2px solid #F3F4F6; padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .profile-info p { margin: 10px 0; color: #4B5563; font-size: 15px; }
+        .profile-info strong { color: #111827; }
+
+        /* Action Buttons */
+        .action-btn {
+            display: block; width: 100%; text-align: center; background-color: #059669; 
+            color: white; text-decoration: none; padding: 12px; border-radius: 8px; 
+            font-weight: 600; margin-bottom: 15px; transition: 0.3s; box-sizing: border-box;
+        }
+        .action-btn:hover { background-color: #047857; }
+        
+        /* Message Alerts */
+        .alert-success {
+            background-color: #D1FAE5; color: #065F46; padding: 12px; border-radius: 8px; 
+            margin-bottom: 20px; font-size: 14px; font-weight: 600; border: 1px solid #10B981;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-nav">
+        <h1>CSC Staff Portal</h1>
+        <a href="{% url 'staff_logout' %}" class="logout-btn">Log Out</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="card profile-info">
+            <h2>My Profile</h2>
+            <p><strong>Name:</strong> {{ staff.name }}</p>
+            <p><strong>Staff ID:</strong> {{ staff.staffid }}</p>
+            <p><strong>Contact:</strong> {{ staff.contact }}</p>
+            <p><strong>Qualification:</strong> {{ staff.Qualification }}</p>
+            
+            <a href="{% url 'staff_attendance_report' %}" class="action-btn" style="background-color: #111827;">View Attendance History</a>
+        </div>
+
+        <div class="card">
+            <h2>Welcome back, {{ staff.name }}!</h2>
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <p style="color: #6B7280; margin-bottom: 20px;">
+                <strong>Your Assigned Courses:</strong> Click a course below to mark attendance for today.
+            </p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                {% for course in courses %}
+                    <a href="{% url 'take_attendance' course %}" class="action-btn">
+                        Take Attendance: {{ course }}
+                    </a>
+                {% empty %}
+                    <p style="color: #DC2626; grid-column: span 2;">No students or courses have been assigned to you yet. Please assign them in the admin panel.</p>
+                {% endfor %}
+            </div>
+            
+            <hr style="border: 0; height: 1px; background: #E5E7EB; margin: 30px 0;">

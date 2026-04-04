@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login | CSC Computer Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F4F6; /* Soft gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); /* Soft modern shadow */
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin: 0 0 10px;
+            color: #111827;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .login-card p {
+            margin: 0 0 30px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #0000CC; /* Match your brand blue */
+            box-shadow: 0 0 0 3px rgba(0, 0, 204, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #0000CC; /* Brand Blue */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #000099;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #6B7280;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-link:hover { color: #111827; }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        {% if messages %}
+    {% for message in messages %}
+        <div style="background-color: #FEE2E2; color: #DC2626; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; font-weight: 600; text-align: left; border: 1px solid #F87171;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+        <h2>Student Portal</h2>
+        <p>Enter your credentials to access your courses.</p>
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="userid">User ID</label>
+                <input type="text" id="userid" name="userid" placeholder="Enter your Student ID" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Login to Dashboard</button>
+        </form>
+        
+        <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+    </div>
+
+</body>
+</html>

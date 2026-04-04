@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Courses | CSC Computer Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #F9FAFB; }
+        
+        /* Navbar matching your home page */
+        .navbar { background-color: #FFCC00; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-links { list-style: none; display: flex; gap: 25px; align-items: center; margin: 0;}
+        .nav-links li a { text-decoration: none; color: #0000CC; font-weight: bold; }
+        .nav-links li a:hover { color: #000; }
+        
+        /* Page Header */
+        .page-header { text-align: center; padding: 60px 20px; background-color: #0000CC; color: white; }
+        .page-header h1 { margin: 0; font-size: 36px; }
+        .page-header p { margin-top: 10px; font-size: 18px; color: #E5E7EB; }
+
+        /* Course Grid */
+        .course-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Course Card CSS */
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid #FFCC00; /* Yellow accent line */
+        }
+
+        .course-details {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-title {
+            margin: 0 0 10px 0;
+            color: #111827;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .course-duration {
+            display: inline-block;
+            background-color: #EEF2FF;
+            color: #4F46E5;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .course-content {
+            color: #4B5563;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .enroll-btn {
+            text-align: center;
+            background-color: #0000CC;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .enroll-btn:hover { background-color: #000099; }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h2 style="color: #0000CC; margin: 0;">CSC EDUCATION</h2>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'courses' %}">Courses</a></li>
+            <li><a href="{% url 'student_login' %}">Student Login</a></li>
+        </ul>
+    </header>
+
+    <div class="page-header">
+        <h1>Transform Your Career</h1>
+        <p>Explore our industry-leading technology courses.</p>
+    </div>
+
+    <div class="course-container">
+        {% for course in courses %}
+            <div class="course-card">
+                {% if course.image %}
+                    <img src="{{ course.image.url }}" alt="{{ course.name }}" class="course-image">
+                {% else %}
+                    <img src="{% static 'images/csc_logo.png' %}" alt="Default Image" class="course-image" style="object-fit: contain; padding: 20px;">
+                {% endif %}
+                
+                <div class="course-details">
+                    <h2 class="course-title">{{ course.name }}</h2>
+                    <div><span class="course-duration">⏱ {{ course.duration }}</span></div>
+                    
+                    <div class="course-content">
+                        {{ course.content|linebreaks|truncatewords:25 }}
+                    </div>
+                    
+                    <a href="{% url 'contact' %}" class="enroll-btn">Inquire Now</a>
+                </div>
+            </div>
+        {% empty %}
+            <p style="text-align: center; color: #6B7280; font-size: 18px; grid-column: 1 / -1;">
+                Courses are currently being updated. Please check back soon!
+            </p>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

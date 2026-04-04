@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | CSC Computer Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles & Navbar */
+        body { margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #F9FAFB; color: #374151; }
+        .navbar { background-color: #FFCC00; padding: 15px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: relative; z-index: 100;}
+        .nav-links { list-style: none; display: flex; gap: 25px; align-items: center; margin: 0;}
+        .nav-links li a { text-decoration: none; color: #0000CC; font-weight: bold; transition: 0.3s;}
+        .nav-links li a:hover { color: #000; }
+        
+        /* Auto-Slider Section */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            background-color: #111827;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide.active { opacity: 1; z-index: 10; }
+        
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images fill the box without stretching */
+            filter: brightness(0.6); /* Darkens image slightly so text is readable */
+        }
+
+        .slide-text {
+            position: absolute;
+            z-index: 20;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        .slide-text h1 { font-size: 48px; margin: 0 0 10px 0; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .slide-text p { font-size: 20px; margin: 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+
+        /* Main Container */
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+
+        /* Story & Details Section */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+            margin-bottom: 60px;
+        }
+
+        .text-block h2 { color: #0000CC; font-size: 32px; font-weight: 800; margin-top: 0; margin-bottom: 20px; letter-spacing: -0.5px;}
+        .text-block p { font-size: 17px; line-height: 1.8; color: #4B5563; margin-bottom: 20px; }
+        .highlight-motto { font-size: 22px; color: #111827; font-weight: 700; border-left: 4px solid #FFCC00; padding-left: 15px; margin: 30px 0;}
+
+        /* Course Overview Section */
+        .course-summary-section {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            margin-top: 40px;
+        }
+        
+        .course-summary-section h2 { text-align: center; color: #111827; font-size: 32px; margin-top: 0; margin-bottom: 40px; }
+        
+        .mini-course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .mini-course-card {
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 20px;
+            transition: 0.3s;
+            border-top: 4px solid #0000CC;
+        }
+        .mini-course-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.05); border-top-color: #FFCC00;}
+        .mini-course-card h4 { margin: 0 0 10px 0; color: #111827; font-size: 18px; }
+        .mini-course-card span { display: inline-block; background: #EEF2FF; color: #4F46E5; padding: 4px 10px; border-radius: 15px; font-size: 12px; font-weight: bold; margin-bottom: 10px;}
+        .mini-course-card p { margin: 0; color: #6B7280; font-size: 14px; line-height: 1.5; }
+
+        @media (max-width: 768px) {
+            .details-grid { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; gap: 15px; padding: 20px; }
+            .slide-text h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <h2 style="color: #0000CC; margin: 0; font-weight: 800; letter-spacing: -0.5px;">CSC EDUCATION</h2>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'courses' %}">Courses</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+            <li><a href="{% url 'student_login' %}">Student Login</a></li>
+        </ul>
+    </header>
+
+    <div class="slider-wrapper">
+        <div class="slide-text">
+            <h1>Transforming Lives Through IT</h1>
+            <p>Welcome to CSC Tirupattur Branch</p>
+        </div>
+
+        <div class="slide active">
+            <img src="{% static 'img/slider1.jpeg' %}" alt="Campus View 1">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider2.jpeg' %}" alt="Campus View 2">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider3.jpeg' %}" alt="Campus View 3">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider4.jpeg' %}" alt="Campus View 4">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider5.jpeg' %}" alt="Campus View 5">
+        </div>
+        <div class="slide">
+            <img src="{% static 'img/slider6.jpeg' %}" alt="Campus View 6">
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="details-grid">
+            
+            <div class="text-block">
+                <h2>Our Vision</h2>
+                <p>Founded under the visionary leadership of Mr. T. Iyamperumal M.E, CSC Computer Education has been at the forefront of providing high-quality, industry-relevant IT training across India.</p>
+                <div class="highlight-motto">"A True Boon for the Middle Class"</div>
+                <p>We believe that financial constraints should never stand in the way of ambition. Our Tirupattur branch carries forward this legacy, offering top-tier training in programming, full-stack development, and essential software tools at highly affordable fees.</p>
+            </div>
+
+            <div class="text-block">
+                <h2>More About Us</h2>
+                <p><strong>[PASTE YOUR NEW DETAILS HERE, BOSS]</strong></p>
+                <p>This is the perfect spot to add the new content you mentioned. You can talk about your specific faculty, your computer labs, your placement records, or anything else that makes the Tirupattur branch special.</p>
+                <p>Because of this two-column layout, whatever you type here will sit perfectly balanced next to the main vision statement!</p>
+            </div>
+
+        </div>
+
+        <div class="course-summary-section">
+            <h2>Our Featured Courses</h2>
+            <div class="mini-course-grid">
+                {% for course in courses %}
+                    <div class="mini-course-card">
+                        <h4>{{ course.name }}</h4>
+                        <span>⏱ {{ course.duration }}</span>
+                        <p>{{ course.content|truncatewords:15 }}</p>
+                    </div>
+                {% empty %}
+                    <p style="text-align: center; color: #6B7280; grid-column: 1 / -1;">Courses are currently being updated.</p>
+                {% endfor %}
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="{% url 'courses' %}" style="display: inline-block; background: #0000CC; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">View Full Course Catalog</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            
+            // Function to move to the next slide
+            function nextSlide() {
+                // Remove 'active' class from current slide
+                slides[currentSlide].classList.remove('active');
+                
+                // Calculate next slide index (loop back to 0 if at the end)
+                currentSlide = (currentSlide + 1) % slides.length;
+                
+                // Add 'active' class to the new slide
+                slides[currentSlide].classList.add('active');
+            }
+
+            // Change slide every 3500 milliseconds (3.5 seconds)
+            setInterval(nextSlide, 3500);
+        });
+    </script>
+
+</body>
+</html>

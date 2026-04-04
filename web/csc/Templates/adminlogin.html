@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | CSC Computer Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0; padding: 0; font-family: 'Inter', sans-serif; background-color: #E5E7EB; /* Slightly darker background for admin */
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+        }
+        .login-card {
+            background-color: #FFFFFF; width: 100%; max-width: 400px; padding: 40px;
+            border-radius: 12px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Deeper shadow */ text-align: center;
+        }
+        .login-card h2 { margin: 0 0 10px; color: #111827; font-size: 24px; font-weight: 700; }
+        .login-card p { margin: 0 0 30px; color: #6B7280; font-size: 14px; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #374151; font-size: 14px; font-weight: 600; }
+        .input-group input {
+            width: 100%; padding: 12px 16px; border: 1px solid #D1D5DB; border-radius: 8px;
+            font-size: 15px; font-family: 'Inter', sans-serif; transition: 0.3s; box-sizing: border-box;
+        }
+        .input-group input:focus {
+            outline: none; border-color: #111827; /* Admin Black */
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.1);
+        }
+        .login-btn {
+            width: 100%; padding: 14px; background-color: #111827; /* Admin Black */ color: white;
+            border: none; border-radius: 8px; font-size: 16px; font-weight: 600; font-family: 'Inter', sans-serif;
+            cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .login-btn:hover { background-color: #374151; }
+        .back-link { display: inline-block; margin-top: 20px; color: #6B7280; text-decoration: none; font-size: 14px; }
+        .back-link:hover { color: #111827; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>System Administrator</h2>
+        <p>Restricted access. Authorized personnel only.</p>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="userid">Admin ID</label>
+                <input type="text" id="userid" name="userid" placeholder="Enter Admin ID" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="login-btn">Login as Admin</button>
+        </form>
+        <a href="{% url 'home' %}" class="back-link">← Back to Home</a>
+    </div>
+</body>
+</html>

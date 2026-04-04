@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance History | CSC Staff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: #F3F4F6; color: #374151; }
+        
+        /* Navbar */
+        .dashboard-nav { background-color: #059669; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .back-btn { color: white; text-decoration: none; font-weight: 600; font-size: 14px; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 6px; transition: 0.3s;}
+        .back-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* Main Container */
+        .container { max-width: 1000px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #F3F4F6; padding-bottom: 15px;}
+        .header-section h2 { margin: 0; color: #111827; }
+
+        /* Data Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #E5E7EB; }
+        th { background-color: #F9FAFB; color: #4B5563; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { font-size: 15px; }
+        
+        /* Table Row Hover Effect */
+        tbody tr:hover { background-color: #F9FAFB; }
+
+        /* Status Badges */
+        .status-badge { padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; display: inline-block; text-align: center; min-width: 70px;}
+        .status-present { background-color: #D1FAE5; color: #065F46; }
+        .status-absent { background-color: #FEE2E2; color: #DC2626; }
+        .status-leave { background-color: #FEF3C7; color: #92400E; }
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-nav">
+        <h1 style="margin: 0; font-size: 20px;">CSC Staff Portal</h1>
+        <a href="{% url 'staff_dashboard' %}" class="back-btn">← Back to Dashboard</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="header-section">
+            <h2>Attendance History Log</h2>
+            <p style="margin: 0; color: #6B7280; font-weight: 500;">Instructor: <span style="color: #111827;">{{ staff.name }}</span></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Student ID</th>
+                    <th>Student Name</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td><strong>{{ record.date|date:"M d, Y" }}</strong></td>
+                    <td style="color: #6B7280;">{{ record.student.std_id }}</td>
+                    <td style="font-weight: 500; color: #111827;">{{ record.student.name }}</td>
+                    <td>{{ record.student.course }}</td>
+                    <td>
+                        {% if record.status == 'Present' %}
+                            <span class="status-badge status-present">Present</span>
+                        {% elif record.status == 'Absent' %}
+                            <span class="status-badge status-absent">Absent</span>
+                        {% else %}
+                            <span class="status-badge status-leave">Leave</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 40px; color: #6B7280;">
+                        No attendance records found yet. Once you take attendance, it will appear here!
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+</html>

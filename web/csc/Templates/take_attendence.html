@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Attendance | CSC Staff</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Inter', sans-serif; background-color: #F3F4F6; }
+        .dashboard-nav { background-color: #059669; color: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 900px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #E5E7EB; }
+        th { background-color: #F9FAFB; color: #374151; }
+        
+        .radio-group { display: flex; gap: 15px; }
+        .radio-group label { cursor: pointer; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        
+        .submit-btn {
+            background-color: #059669; color: white; border: none; padding: 12px 24px;
+            border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 20px; width: 100%; font-size: 16px;
+        }
+        .submit-btn:hover { background-color: #047857; }
+        .back-link { display: inline-block; margin-bottom: 20px; color: #6B7280; text-decoration: none; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+    <header class="dashboard-nav">
+        <h1 style="margin: 0; font-size: 20px;">CSC Staff Portal</h1>
+        <a href="{% url 'staff_dashboard' %}" style="color: white; text-decoration: none; font-weight: bold;">← Back to Dashboard</a>
+    </header>
+
+    <div class="container">
+        <a href="{% url 'staff_dashboard' %}" class="back-link">← Back to Dashboard</a>
+        <h2 style="margin-top: 0;">Attendance for: <span style="color: #059669;">{{ course_name }}</span></h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div style="margin-bottom: 20px;">
+                <label style="font-weight: bold;">Date:</label>
+                <input type="date" name="attendance_date" value="{{ today }}" style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Timing</th>
+                        <th>Mark Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.std_id }}</td>
+                        <td><strong>{{ student.name }}</strong></td>
+                        <td>{{ student.timing }}</td>
+                        <td>
+                            <div class="radio-group">
+                                <label><input type="radio" name="status_{{ student.std_id }}" value="Present" required> Present</label>
+                                <label><input type="radio" name="status_{{ student.std_id }}" value="Absent"> Absent</label>
+                                <label><input type="radio" name="status_{{ student.std_id }}" value="Leave"> Leave</label>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: #DC2626;">No students found for this course.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if students %}
+                <button type="submit" class="submit-btn">Save Attendance</button>
+            {% endif %}
+        </form>
+    </div>
+
+</body>
+</html>

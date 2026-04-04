@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CSC Computer Education{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <img src="{% static 'img/download.png' %}" alt="CSC Logo">
+        </div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'courses' %}">Courses</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="login-btn">Login</a>
+                    <div class="dropdown-content">
+                        <a href="{% url 'student_login' %}">Student Login</a>
+                        <a href="{% url 'staff_login' %}">Staff Login</a>
+                        
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="main-title">{{ main_heading|default:"CSC COMPUTER EDUCATION" }}</h1>
+        <div class="subtitle-box">
+            <h2 class="subtitle">{{ sub_heading|default:"BOON FOR MIDDLE CLASS" }}</h2>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="founder-card">
+            <img src="{% static 'img/images.jpg' %}" alt="Founder Image">
+        </div>
+        <div class="about-content">
+            <h2>{{ about_title|default:"About the Founder" }}</h2>
+            
+            <p>
+                Our founder, {{ founder_name|default:"Mr. T. Iyamperumal M.E" }}, envisioned creating a platform to bridge education and technology, focusing on innovation, excellence, and accessibility for all learners especially to reach middle class who cannot afford more money to spend for learning latest technologies.
+            </p>
+            <p>
+                Over the years, CSC Computer Education has grown exponentially, boasting a network of **{{ branch_count|default:"400+" }} branches** across the globe. Our training centers are equipped with state-of-the-art infrastructure and the latest technologies, fostering an environment conducive to interactive learning. From school-going children to corporate professionals, CSC caters to diverse learners through a rich array of courses.
+            </p>
+        </div>
+    </section>
+
+</body>
+</html>
